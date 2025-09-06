@@ -1,6 +1,6 @@
 {
   "name": "spellshape-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Official JS SDK for SpellShape AI parametric 3D endpoints",
   "type": "module",
   "main": "src/index.js",
