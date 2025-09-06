@@ -12,17 +12,17 @@ class SpellshapeAgent {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': this.apiKey  
+        'X-API-Key': this.apiKey
       },
       body: JSON.stringify(body)
     });
 
     if (!res.ok) {
       let errorData;
-      try { 
-        errorData = await res.json(); 
-      } catch (_) {}
-      
+      try {
+        errorData = await res.json();
+      } catch (_) { }
+
       throw new Error(
         `API error: ${res.status} ${res.statusText}. ${errorData?.error ?? ''}`
       );
@@ -56,6 +56,20 @@ class SpellshapeAgent {
     const data = await this._fetch('chat', postBody);
     return data.response;
   }
+
+  async vision(imageUrl) {
+    if (!imageUrl || typeof imageUrl !== 'string') {
+      throw new Error('vision(imageUrl) requires a publicly reachable URL string');
+    }
+    try {
+      const data = await this._fetch('vision', { imageUrl });
+      return data.prompt;
+    } catch (err) {
+      console.error('Vision API error:', err);
+      throw err; // Re-throw so caller can handle appropriately
+    }
+  }
+
 }
 
 export default SpellshapeAgent;
